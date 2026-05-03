@@ -1,4 +1,4 @@
-name: Deploy validator service
+name: Deploy Validator Service
 
 on:
   push:
@@ -26,17 +26,10 @@ jobs:
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{ vars.AWS_REGION || 'us-east-1' }}
+          aws-region: us-east-1
 
       - name: Build Lambda artifact
         run: zip -j validator.zip index.py validation.py
 
       - name: Upload artifact to S3
-        run: aws s3 cp validator.zip s3://${{ vars.ARTIFACT_BUCKET }}/validator.zip
-
-      - name: Update Lambda code
-        run: |
-          aws lambda update-function-code \
-            --function-name validator-service \
-            --s3-bucket ${{ vars.ARTIFACT_BUCKET }} \
-            --s3-key validator.zip
+        run: aws s3 cp validator.zip s3://file-validation-artifacts-12345/validator.zip
