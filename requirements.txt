@@ -1,0 +1,2 @@
+# AWS Lambda Python runtimes include boto3. Keep this file so CI packaging has
+# a standard dependency entry point if external packages are added later.
